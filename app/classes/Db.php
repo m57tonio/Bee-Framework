@@ -1,8 +1,18 @@
 <?php 
 
+/**
+ * @author Joystick
+ * 
+ * Contribuido por
+ * @author Pere
+ * 
+ * @version 1.1.0
+ *
+ */
 class Db
 {
-  private $link = null;
+  private static $instance = null; // Instancia para singleton
+  private $link            = null;
   private $dsn;
   private $engine;
   private $host;
@@ -44,11 +54,19 @@ class Db
   public static function connect(bool $throw_exception = false) 
   {
     try {
-      $self       = new self();
+      /**
+       * Se implementó singleton para optimizar la carga de la base de datos y sus conexiones
+       */
+      if (self::$instance === null) {
+        self::$instance = new self();
+      }
+      
+      $self = self::$instance;
+      
       if ($self->link !== null) return $self->link;
 
       $self->link = new PDO($self->dsn, $self->user, $self->pass, $self->options);
-
+    
       return $self->link;
 
     } catch (PDOException $e) {
@@ -72,7 +90,7 @@ class Db
   {
     $id          = null;
     $last_id     = false;
-    $transaction = isset($options['transaction']) ? ($options['transaction'] === true ? true : false) : true;
+    $transaction = isset($options['transaction']) ? ($options['transaction'] === true ? true : false) : false;
     $debug       = isset($options['debug']) ? ($options['debug'] === true ? true : false) : false;
     $start       = isset($options['start']) ? ($options['start'] === true ? true : false) : false;
     $commit      = isset($options['commit']) ? ($options['commit'] === true ? true : false) : false;

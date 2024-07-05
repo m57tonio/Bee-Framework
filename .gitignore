@@ -10,4 +10,5 @@ prepros.config
 app/config/config.php
 
 app/controllers/pruebasController.php
+templates/views/pruebas/
 .env
