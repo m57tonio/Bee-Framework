@@ -90,7 +90,7 @@ class Db
   {
     $id          = null;
     $last_id     = false;
-    $transaction = isset($options['transaction']) ? ($options['transaction'] === true ? true : false) : false;
+    $transaction = isset($options['transaction']) ? ($options['transaction'] === true ? true : false) : true;
     $debug       = isset($options['debug']) ? ($options['debug'] === true ? true : false) : false;
     $start       = isset($options['start']) ? ($options['start'] === true ? true : false) : false;
     $commit      = isset($options['commit']) ? ($options['commit'] === true ? true : false) : false;
@@ -98,9 +98,9 @@ class Db
 
     // Inicia conexión PDO
     $link  = self::connect();
-
-    // Inicio de la transacción
-    if ($transaction === true || $start === true) {
+    
+    // Inicio de la transacción en caso de existir y estar abierta
+    if (($transaction === true || $start === true) && !$link->inTransaction()) {
       $link->beginTransaction();
     }
 
@@ -135,7 +135,7 @@ class Db
       }
 
       // Manejando errores en el query o la petición
-      if ($transaction === true || $rollback === true) {
+      if (($transaction === true || $rollback === true) && $link->inTransaction()) {
         $link->rollBack();
       }
 
