@@ -123,7 +123,7 @@ class Db
       }
 
       // UPDATE | DELETE | ALTER TABLE | DROP TABLE | TRUNCATE | etc
-      if ($transaction === true || $commit === true) {
+      if (($transaction === true || $commit === true) && $link->inTransaction()) {
         $link->commit();
       }
 
