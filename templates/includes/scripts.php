@@ -21,6 +21,8 @@
 
 <!-- Lightbox js -->
 <?php echo get_lightbox(); ?>
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 <!-- Objeto Bee Javascript registrado -->
 <?php echo load_bee_obj(); ?>

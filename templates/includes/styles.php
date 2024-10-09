@@ -21,6 +21,9 @@
 <!-- CDN Vue js 3 | definido en settings.php -->
 <?php echo get_vuejs(); ?>
 
+<!-- jQUERY UI -->
+<link rel="stylesheet" href="<?php echo CSS.'jquery.ui.base.css'; ?>">
+
 <!-- Estilos personalizados deben ir en main.css o abajo de esta línea -->
 <link rel="stylesheet" href="<?php echo CSS . 'main.css?v='.get_asset_version(); ?>">
 

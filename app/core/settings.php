@@ -99,10 +99,10 @@ define('BEE_COOKIE_DOMAIN'       , '');
 define('PHPMAILER_EXCEPTIONS'    , true);                // Mantener activo para recibir excepciones en errores de Phpmailer
 define('PHPMAILER_SMTP'          , false);               // Activar uso de cuenta SMTP para envío de correos true o false
 define('PHPMAILER_DEBUG'         , false);               // Solo activar si es necesario el log verboso para debug
-define('PHPMAILER_HOST'          , 'smtp.example.com');  // Dominio o servidor SMTP
+define('PHPMAILER_HOST'          , 'smtp.gmail.com');  // Dominio o servidor SMTP
 define('PHPMAILER_AUTH'          , true);                // Autenticar con SMTP true o false
-define('PHPMAILER_USERNAME'      , 'user@example.com');  // Usuario de la cuenta
-define('PHPMAILER_PASSWORD'      , '123secret');         // Password de la cuenta
+define('PHPMAILER_USERNAME'      , 'tmantony57@gmail.com');  // Usuario de la cuenta
+define('PHPMAILER_PASSWORD'      , 'sczlelguhdfcxqxq');         // Password de la cuenta
 define('PHPMAILER_SECURITY'      , 'tls');               // Tipo de seguridad, opciones tls o ssl
 define('PHPMAILER_PORT'          , '465');               // Puerto de conexión SMTP -- 587 hotmail -- 465 gmail
 define('PHPMAILER_TEMPLATE'      , 'emailTemplate');     // Plantilla por defecto de correo electrónico
@@ -153,7 +153,7 @@ define('LDB_ENGINE'              , 'mysql');
 define('LDB_HOST'                , 'localhost');
 define('LDB_NAME'                , 'db_beeframework');
 define('LDB_USER'                , 'root');
-define('LDB_PASS'                , '');
+define('LDB_PASS'                , 'root');
 define('LDB_CHARSET'             , 'utf8');
 
 // El controlador por defecto / el método por defecto / el controlador de errores por defecto

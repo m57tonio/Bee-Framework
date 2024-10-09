@@ -8,7 +8,7 @@
  * configuración especial en producción
  */
 define('IS_LOCAL'     , in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']));
-define('DEV_PATH'     , '/Bee-Framework/'); // Ruta del proyecto en desarrollo después de htdocs o www
+define('DEV_PATH'     , '/BeeFramework/'); // Ruta del proyecto en desarrollo después de htdocs o www
 define('LIVE_PATH'    , '/'); // Ruta del proyecto en producción
 define('BASEPATH'     , IS_LOCAL ? DEV_PATH : LIVE_PATH);
 define('IS_DEMO'      , false); // Si es requerida añadir funcionalidad DEMO en tu sistema, puedes usarlo con esta constante

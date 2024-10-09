@@ -11,6 +11,25 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="bee">Inicio</a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="utilidades" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Apps
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="utilidades">
+            <li><a class="dropdown-item" href="apps_example/full_calendar">Full Calendar</a></li>
+            <li><a class="dropdown-item"  href="apps_example/email_notification">Notificación por email Calendar</a></li>
+            <li><a class="dropdown-item" href="apps_example/components">Componentes Reutilizables</a></li>
+            <li><a class="dropdown-item" href="apps_example/autoguardado">Autoguardado</a></li>
+            <li><a class="dropdown-item" href="apps_example/qrcode">QR</a></li>
+            <li><a class="dropdown-item" href="apps_example/pdf_generator">PDF </a></li>
+            <li><a class="dropdown-item" href="apps_example/notifications">Nofificación </a></li>
+            <li><a class="dropdown-item" href="apps_example/tickets">Ticket </a></li>
+            <li><a class="dropdown-item" href="apps_example/temario">Temario </a></li>
+            <li><a class="dropdown-item" href="apps_example/enviar_whatsapp">MSM con WhatsApp </a></li>
+            <!-- <li><a class="dropdown-item" href="apps_example/auth_whatsapp">MSM con WhatsApp automatico</a></li> -->
+          </ul>
+        </li> 
+
         <li class="nav-item">
           <a class="nav-link" href="tienda">Tienda</a>
         </li>
