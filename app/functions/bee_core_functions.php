@@ -304,12 +304,12 @@ function build_url(string $url, array $params = [], bool $redirection = true, bo
 
 	// Si requiere token csrf
 	if ($csrf) {
-		$query_array["_t"]          = CSRF_TOKEN;
+		$query_array["_t"]          = urlencode(CSRF_TOKEN);
 	}
 
 	// Si requiere redirección
 	if ($redirection) {
-		$query_array["redirect_to"] = CUR_PAGE;
+		$query_array["redirect_to"] = urlencode(CUR_PAGE);
 	}
 
 	// Si no es un array regresa la url original
@@ -415,115 +415,62 @@ function json_encode_utf8($var)
  */
 function format_date($date_string, $type = 'd M, Y')
 {
-	// Para versiones de PHP inferiores a 8.1.0 cuando se vuelve deprecada la función strftime()
-	if (version_compare(phpversion(), '8.1.0', "<")) {
-		setlocale(LC_ALL, "es_MX.UTF-8", "es_MX", "esp");
+	$locale   = "es_MX";
+	$timezone = date_default_timezone_get();
 
-		// Fragmentos para fechas
-		$anio      = strftime("%Y", strtotime($date_string));
-		$mes       = strftime("%B", strtotime($date_string));
-		$diames    = strftime("%d", strtotime($date_string));
-		$diasemana = strftime("%A", strtotime($date_string));
-		$dia       = strftime("%e", strtotime($date_string));
-		$hora      = strftime("%H", strtotime($date_string));
-		$minutos   = strftime("%M", strtotime($date_string));
-
-		// Variantes para formar nuestra fecha
-		$date = [
-			'año'        => $anio,
-			'mes'        => ucfirst($mes),
-			'mes_corto'  => substr($mes, 0, 3),
-			'dia'        => $dia,
-			'dia_mes'    => $diames,
-			'dia_semana' => ucfirst($diasemana),
-			'hora'       => $hora,
-			'minutos'    => $minutos,
-			'tiempo'     => $hora . ':' . $minutos
-		];
-
-		switch ($type) {
-			case 'd M, Y':
-				return sprintf('%s de %s, %s', $date['dia'], $date['mes'], $date['año']);
-			case 'm Y':
-				return sprintf('%s %s', $date['mes'], $date['año']);
-			case 'd m Y':
-				return sprintf('%s %s %s', $date['dia'], $date['mes_corto'], $date['año']);
-			case 'mY':
-				return sprintf('%s, %s', ucfirst($date['mes_corto']), $date['año']);
-			case 'MY':
-				return sprintf('%s, %s', ucfirst($date['mes']), $date['año']);
-			case 'd M, Y time':
-				return $date['dia'] . ' de ' . $date['mes'] . ', ' . $date['año'] . ' a las ' . date('H:i A', strtotime($date_string));
-			case 'time':
-				return $date['tiempo'] . ' ' . date('A', strtotime($date_string));
-			case 'date time':
-				return $date['dia'] . '/' . $date['mes_corto'] . '/' . $date['año'] . ' ' . $date['tiempo'] . ' ' . date('A', strtotime($date_string));
-			case 'short': //01/Nov/2019
-				return sprintf('%s/%s/%s', $date['dia_mes'], ucfirst($date['mes_corto']), $date['año']);
-			default:
-				return sprintf('%s de %s, %s', $date['dia'], $date['mes'], $date['año']);
-		}
-	} else {
-		$locale   = "es_MX";
-		$timezone = date_default_timezone_get();
-
-		// Validar si la extensión está activa:
-		if (!extension_loaded('intl')) {
-			throw new Exception('Debes activar la extensión "intl" en tu archivo php.ini');
-		}
-
-		$calendar = IntlDateFormatter::GREGORIAN;
-		$pattern  = "";
-
-		switch ($type) {
-			case 'd M, Y':
-				$pattern = "d 'de' MMMM, yyyy";
-				break;
-
-			case 'm Y':
-				$pattern = "MMMM yyyy";
-				break;
-
-			case 'd m Y':
-				$pattern = "dd MMMM yyyy";
-				break;
-
-			case 'mY':
-				$pattern = "";
-				break;
-
-			case 'MY':
-				$pattern = "";
-				break;
-
-			case 'd M, Y time':
-				$pattern = "";
-				break;
-
-			case 'time':
-				$pattern = "";
-				break;
-
-			case 'date time':
-				$pattern = "";
-				break;
-
-			case 'short': //01/Nov/2019
-				$pattern = "d'/'MMM'/'yyyy";
-				break;
-
-			default:
-				$pattern = "EEEE, d 'de' MMMM, yyyy";
-		}
-
-		$fmt      = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::FULL, $timezone, $calendar, $pattern);
-		$res      = ucfirst(datefmt_format($fmt, strtotime($date_string)));
-
-		// Debugging
-		//echo datefmt_get_error_message($fmt);
-
-		return $res;
+	// Validar si la extensión está activa:
+	if (!extension_loaded('intl')) {
+		throw new Exception('Debes activar la extensión "intl" en tu archivo php.ini');
 	}
+
+	$calendar = IntlDateFormatter::GREGORIAN;
+	$pattern  = "";
+
+	switch ($type) {
+		case 'd M, Y':
+			$pattern = "d 'de' MMMM, yyyy";
+			break;
+
+		case 'm Y':
+			$pattern = "MMMM yyyy";
+			break;
+
+		case 'd m Y':
+			$pattern = "dd MMMM yyyy";
+			break;
+
+		case 'mY':
+			$pattern = "";
+			break;
+
+		case 'MY':
+			$pattern = "";
+			break;
+
+		case 'd M, Y time':
+			$pattern = "";
+			break;
+
+		case 'time':
+			$pattern = "";
+			break;
+
+		case 'date time':
+			$pattern = "";
+			break;
+
+		case 'short': //01/Nov/2019
+			$pattern = "d'/'MMM'/'yyyy";
+			break;
+
+		default:
+			$pattern = "EEEE, d 'de' MMMM, yyyy";
+	}
+
+	$fmt = new IntlDateFormatter($locale, IntlDateFormatter::FULL, IntlDateFormatter::FULL, $timezone, $calendar, $pattern);
+	$res = ucfirst(datefmt_format($fmt, strtotime($date_string)));
+
+	return $res;
 }
 
 /**
@@ -2261,7 +2208,7 @@ function destroy_cookie($cookie, $path = '', $domain = '')
 	}
 
 	// Seteamos el cookie con un valor null y tiempo negativo para destruirlo
-	setcookie($cookie, null, time() - 1000, $path, $domain);
+	setcookie($cookie, '', time() - 1000, $path, $domain);
 	unset($Bee_Cookies[$cookie]);
 
 	return true;
@@ -2273,7 +2220,7 @@ function destroy_cookie($cookie, $path = '', $domain = '')
  * @param string $cookie_name
  * @return mixed
  */
-function get_cookie($cookie)
+function get_cookie(string $cookie)
 {
 	return isset($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : false;
 }

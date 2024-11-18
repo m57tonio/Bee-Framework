@@ -105,6 +105,11 @@ class Db
     }
 
     try {
+      // Mostrar el query en el archivo de loggeo
+      if ($debug) {
+        logger(sprintf('DB Query: %s', $sql));
+      }
+
       $query = $link->prepare($sql);
       $res   = $query->execute($params);
   
@@ -130,7 +135,7 @@ class Db
       return $id !== null && $last_id === true ? $id : true;
         
     } catch (Exception $e) {
-      if ($debug === true) {
+      if ($debug) {
         logger(sprintf('DB Error: %s', $e->getMessage()));
       }
 

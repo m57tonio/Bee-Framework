@@ -51,12 +51,12 @@ class Redirect
     }
 
     if (isset($_POST['redirect_to'])) {
-      header('Location: ' . $_POST['redirect_to']);
+      header(sprintf('Location: %s', $_POST['redirect_to']));
       die();
     }
 
     if (isset($_GET['redirect_to'])) {
-      header('Location: ' . $_GET['redirect_to']);
+      header(sprintf('Location: %s', urldecode($_GET['redirect_to'])));
       die();
     }
 
