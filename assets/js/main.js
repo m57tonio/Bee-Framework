@@ -5,11 +5,15 @@ $(document).ready(function () {
   $('body').on('click', '.confirmar', async function (e) {
     e.preventDefault();
 
-    const url    = $(this).attr('href');
-    const result = await Swal.fire({
-      title: "¿Estás seguro?",
+    const url        = $(this).attr('href');
+    const titulo     = $(this).data('titulo') ?? '¿Estás seguro?';
+    const mensaje    = $(this).data('mensaje') ?? 'No se puede revertir esta acción.';
+    const textoBoton = $(this).data('textoBoton') ?? 'Si, está bien';
+    const result     = await Swal.fire({
+      title: titulo,
+      html: mensaje,
       showCancelButton: true,
-      confirmButtonText: "Si, está bien",
+      confirmButtonText: textoBoton,
     }).then((result) => result);
 
     if (result.isConfirmed == false) {
